@@ -163,4 +163,4 @@ npm run lint     # Roda o ESLint
 
 ## Relacionado
 
-- [codesurv-backend](https://github.com/seu-usuario/codesurv-backend) — API REST e servidor de jogo
+- [codesurv-backend](https://github.com/SergioGuthyerres/CodeSurv-Backend.git) — API REST e servidor de jogo
