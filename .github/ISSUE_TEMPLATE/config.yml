@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Backend do CodeSurv
+    url: https://github.com/SergioGuthyerres/CodeSurv-Backend/issues
+    about: Problemas de sala, pontuacao, avaliacao de codigo ou eventos do servidor vao no repositorio do backend.
