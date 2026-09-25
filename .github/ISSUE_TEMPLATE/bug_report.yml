@@ -1,0 +1,40 @@
+name: Bug
+description: Relatar algo que nao funciona como deveria na interface
+labels: ["bug"]
+body:
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que acontece
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que deveria acontecer
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducao
+    attributes:
+      label: Como reproduzir
+      placeholder: |
+        1. Abrir /rooms
+        2. Clicar em ...
+        3. A tela mostra ...
+    validations:
+      required: true
+
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador e sistema
+      placeholder: Chrome 140 / macOS 15
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Erros no console
+      render: text
