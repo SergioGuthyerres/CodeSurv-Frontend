@@ -1,166 +1,70 @@
-# codesurv-frontend
+<h1 align="center">CodeSurv — Frontend</h1>
 
-> Interface web do **CodeSurv** — plataforma de Casual Coding Game com desafios de lógica e algoritmos em tempo real.
+<p align="center">
+  Interface web do <strong>CodeSurv</strong>, um jogo multiplayer de desafios de programação por salas.
+</p>
 
----
-
-## Sobre o projeto
-
-O frontend do CodeSurv é uma aplicação React responsável por toda a experiência do jogador: entrar em salas, escrever soluções no editor de código, acompanhar o timer e ver o resultado das rodadas em tempo real.
-
-A comunicação com o backend acontece de duas formas:
-
-- **Socket.IO** — para tudo que é em tempo real (turnos, submissões, resultados)
-- **Fetch nativo** — para chamadas HTTP pontuais (listar salas públicas)
-
----
-
-## Stack
-
-| Tecnologia       | Versão | Uso                       |
-| ---------------- | ------ | ------------------------- |
-| React            | 18+    | Framework de interface    |
-| Vite             | 5+     | Bundler e dev server      |
-| Tailwind CSS     | 3+     | Estilização               |
-| Socket.IO Client | 4+     | Comunicação em tempo real |
-| CodeMirror 6     | 6+     | Editor de código          |
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 19">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript 5">
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 8">
+  <img src="https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4">
+  <img src="https://img.shields.io/badge/Socket.IO-4-010101?style=flat-square&logo=socketdotio&logoColor=white" alt="Socket.IO 4">
+</p>
 
 ---
 
-## Pré-requisitos
+O jogador entra numa sala, recebe um desafio de lógica e compete com os outros para resolvê-lo
+primeiro. Este repositório é só a interface — toda a lógica de jogo, as salas e a execução do
+código vivem no [**CodeSurv-Backend**](https://github.com/SergioGuthyerres/CodeSurv-Backend).
 
-- Node.js 20+
-- npm 10+
-- Backend do CodeSurv rodando localmente (`http://localhost:3001`)
+## Rodando
 
----
-
-## Instalação
+Precisa do backend no ar (por padrão em `http://localhost:3000` — veja
+[como subir](https://github.com/SergioGuthyerres/CodeSurv-Backend#como-rodar)).
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/codesurv-frontend.git
-cd codesurv-frontend
-
-# Instale as dependências
-npm install
-
-# Configure as variáveis de ambiente
 cp .env.example .env
-```
-
-Edite o `.env` com a URL do backend:
-
-```env
-VITE_API_URL=http://localhost:3001
-VITE_SOCKET_URL=http://localhost:3001
-```
-
----
-
-## Rodando localmente
-
-```bash
+npm install
 npm run dev
 ```
 
-Acesse `http://localhost:5173` no navegador.
+Acesse `http://localhost:5173`.
 
----
+| Variável           | Padrão                  | Descrição     |
+|--------------------|-------------------------|---------------|
+| `VITE_BACKEND_URL` | `http://localhost:3000` | URL do backend |
 
-## Estrutura de pastas
-
-```
-src/
-├── components/
-│   ├── Editor/         # CodeMirror 6 encapsulado como componente React
-│   ├── Scoreboard/     # Ranking parcial e pódio final
-│   └── Lobby/          # Lista de jogadores e configurações da sala
-│
-├── pages/
-│   ├── Home.jsx        # Tela inicial: username + criar/entrar em sala
-│   ├── Lobby.jsx       # Sala de espera antes da partida
-│   └── Game.jsx        # Partida ativa: editor + timer + scoreboard
-│
-├── hooks/
-│   ├── useSocket.js    # Listeners de eventos Socket.IO com cleanup automático
-│   └── useGame.js      # Estado da partida: rodada, desafio, timer, submissão
-│
-├── services/
-│   └── roomService.js  # Chamadas HTTP para a API REST do backend
-│
-├── socket.js           # Instância única do Socket.IO (importar em todo lugar)
-└── main.jsx            # Entry point da aplicação
-```
-
----
-
-## Fluxo principal
-
-```
-Home.jsx
-  └── usuário digita username
-        ├── "Criar Sala"  → formulário de config → Lobby.jsx (como host)
-        └── "Entrar"      → digita código        → Lobby.jsx (como jogador)
-
-Lobby.jsx
-  └── aguarda jogadores conectarem
-        └── host clica "Iniciar" → Game.jsx
-
-Game.jsx
-  └── recebe game:start  → exibe desafio + timer
-        └── jogador escreve no Editor → clica "Enviar" → game:submit
-              └── recebe game:result  → Scoreboard atualiza
-                    └── última rodada → recebe game:end → Pódio
-```
-
----
-
-## Eventos Socket.IO
-
-| Evento            | Direção | Descrição                             |
-| ----------------- | ------- | ------------------------------------- |
-| `room:create`     | Emite   | Cria nova sala com configurações      |
-| `room:join`       | Emite   | Entra em sala existente com código    |
-| `room:update`     | Recebe  | Atualização do estado do lobby        |
-| `game:start`      | Recebe  | Início de turno com desafio e duração |
-| `game:submit`     | Emite   | Envia solução do jogador              |
-| `game:result`     | Recebe  | Resultado do turno e pontuações       |
-| `game:end`        | Recebe  | Fim da partida com pódio              |
-| `room:disconnect` | Recebe  | Notificação de saída de jogador       |
-
----
-
-## Scripts disponíveis
+## Scripts
 
 ```bash
-npm run dev      # Inicia o servidor de desenvolvimento
-npm run build    # Gera o build de produção em /dist
-npm run preview  # Visualiza o build de produção localmente
-npm run lint     # Roda o ESLint
+npm run dev        # servidor de desenvolvimento
+npm run build      # build de produção
+npm run preview    # serve o build localmente
+npm run lint       # ESLint
+npm run typecheck  # tsc sem emitir
 ```
 
----
+## Comunicação com o backend
 
-## Variáveis de ambiente
+Toda a conversa com o servidor passa por uma única instância de socket exportada em
+`src/socket.js`, apontando para `VITE_BACKEND_URL`. Os eventos são os de sala (`room:*`) e os
+de jogo (`game:*`).
 
-| Variável          | Descrição                       | Exemplo                 |
-| ----------------- | ------------------------------- | ----------------------- |
-| `VITE_API_URL`    | URL base da API REST do backend | `http://localhost:3001` |
-| `VITE_SOCKET_URL` | URL do servidor Socket.IO       | `http://localhost:3001` |
+O contrato — nomes dos eventos, payloads e códigos de erro — é definido pelo servidor e está
+documentado num lugar só, para não divergir entre os dois repositórios:
+[**eventos Socket.IO no README do backend**](https://github.com/SergioGuthyerres/CodeSurv-Backend#eventos-socketio).
 
-> Todas as variáveis de ambiente no Vite precisam começar com `VITE_` para ficarem acessíveis no código.
+## Estado atual
 
----
+Na `main` estão o scaffold (React + Vite + Tailwind) e a conexão com o backend via
+Socket.IO. As telas do jogo — home, lista de salas, criação de sala, lobby e partida — estão
+implementadas e aguardando revisão nas branches abertas do repositório.
 
-## Fases de desenvolvimento
-
-- **Fase 1 — MVP:** Sem autenticação. O jogador digita apenas um username na tela inicial.
-- **Fase 2:** Cadastro e login com e-mail, senha (bcrypt) e token JWT.
-- **Fase 3:** OAuth (Google/GitHub) e perfil com histórico de partidas.
-
----
+O que ainda não existe não está descrito aqui: vira
+[issue](https://github.com/SergioGuthyerres/CodeSurv-Frontend/issues).
 
 ## Relacionado
 
-- [codesurv-backend](https://github.com/SergioGuthyerres/CodeSurv-Backend.git) — API REST e servidor de jogo
+[**CodeSurv-Backend**](https://github.com/SergioGuthyerres/CodeSurv-Backend) — Fastify,
+Socket.IO, MongoDB e execução de código em sandbox na Piston.
