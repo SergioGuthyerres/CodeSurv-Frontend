@@ -1,13 +1,32 @@
 {
   "name": "codesurv-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Interface web do CodeSurv: salas multiplayer, lobby em tempo real e editor de desafios de programacao.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergioGuthyerres/CodeSurv-Frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SergioGuthyerres/CodeSurv-Frontend/issues"
+  },
+  "homepage": "https://github.com/SergioGuthyerres/CodeSurv-Frontend#readme",
+  "keywords": [
+    "react",
+    "vite",
+    "typescript",
+    "tailwindcss",
+    "socket-io",
+    "realtime"
+  ],
+  "author": "Sergio Guthyerres dos Santos de Morais",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
